@@ -1,0 +1,13 @@
+flowchart TD
+    A["Read Vbatt<br/>Ibatt Tbatt"] --> B["Protection<br/>check"]
+    B -->|fault| C["Stop charging<br/>duty = zero"]
+    B -->|safe| D{{"Charging<br/>state?"}}
+    D -->|Standby| E["Duty = zero"]
+    D -->|Precharge| F["Current PI<br/>at low current"]
+    D -->|CC| G["Current PI<br/>at Icc"]
+    D -->|CV| H["Voltage PI<br/>gives current<br/>reference"]
+    H --> I["Current PI<br/>tracks taper<br/>current"]
+    F --> J["State transition<br/>logic"]
+    G --> J
+    I --> J
+    J --> K["Update Ah and<br/>charging time"]

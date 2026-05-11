@@ -1,0 +1,7 @@
+flowchart TD
+    A["Read P_ref Q_ref<br/>P_meas Q_meas<br/>and voltage<br/>current states"] --> B["Swing equation<br/>update omega<br/>and theta"]
+    B --> C["Excitation control<br/>updates internal<br/>emf"]
+    C --> D["Voltage outer loop<br/>computes id_ref<br/>iq_ref"]
+    D --> E["Current inner loop<br/>computes<br/>modulation voltage"]
+    E --> F["Output dq<br/>modulation<br/>commands"]
+    F --> G["Emulate synchronous<br/>machine inertia<br/>and damping"]

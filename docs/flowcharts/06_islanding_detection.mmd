@@ -1,0 +1,11 @@
+flowchart TD
+    A["Read Vrms<br/>frequency theta<br/>and sampled<br/>voltage"] --> B{"Voltage<br/>window?"}
+    B -->|trip| C["Declare island<br/>and open PCC"]
+    B -->|no trip| D{"Frequency<br/>window?"}
+    D -->|trip| C
+    D -->|no trip| E{"Phase jump or<br/>ROCOF?"}
+    E -->|trip| C
+    E -->|no trip| F["Active frequency<br/>drift injection"]
+    F --> G{{"Frequency<br/>deviation<br/>enlarged?"}}
+    G -->|yes| C
+    G -->|no| H["Remain<br/>grid-connected"]

@@ -1,0 +1,10 @@
+flowchart TD
+    A["Measure inverter<br/>and bus voltage<br/>frequency phase"] --> B{"Check sync<br/>windows<br/>dV df dphi?"}
+    B -->|not synced| C["Pre-sync PI<br/>adjusts phase<br/>and frequency"]
+    C --> D["Wait sync<br/>hold time"]
+    D --> E["Close<br/>contactor"]
+    B -->|synced| E
+    E --> F["Compute expected<br/>power share<br/>from ratings"]
+    F --> G["Power sharing<br/>PI correction"]
+    G --> H["Optional hot-plug<br/>ramp and virtual<br/>impedance"]
+    H --> I["Adjusted Pref<br/>and Qref for<br/>each inverter"]

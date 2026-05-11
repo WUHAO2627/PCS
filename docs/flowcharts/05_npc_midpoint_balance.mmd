@@ -1,0 +1,8 @@
+flowchart TD
+    A["Measure upper and<br/>lower capacitor<br/>voltages"] --> B["Compute<br/>delta V"]
+    B --> C["PI balancing<br/>controller"]
+    C --> D["Generate zero-<br/>sequence offset"]
+    D --> E["Inject offset into<br/>three-phase<br/>references"]
+    E --> F["Three-level<br/>quantization or<br/>carrier offset"]
+    F --> G["Adjust<br/>switching states"]
+    G --> H["Reduce midpoint<br/>voltage imbalance"]

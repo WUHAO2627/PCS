@@ -1,0 +1,11 @@
+flowchart TD
+    A["Measure arm currents<br/>or inverter phase<br/>currents"] --> B{{"MMC or<br/>parallel?"}}
+    B -->|MMC| C["Extract<br/>circulating current"]
+    C --> D["Transform to<br/>negative-sequence<br/>2w dq frame"]
+    D --> E["PI controller<br/>with decoupling"]
+    E --> F["Back transform to<br/>abc compensation"]
+    B -->|Parallel| G["Compute zero-<br/>sequence current"]
+    G --> H["Zero-sequence PI<br/>suppression"]
+    H --> I["Per-phase PR<br/>resonant controller"]
+    I --> F
+    F --> J["Inject compensation<br/>voltage"]

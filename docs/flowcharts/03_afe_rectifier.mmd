@@ -1,0 +1,10 @@
+flowchart TD
+    A["Measure AC currents<br/>and grid voltages"] --> B["Alpha beta<br/>transform"]
+    B --> C["PLL update<br/>theta"]
+    C --> D["Transform to<br/>dq frame"]
+    D --> E["DC bus voltage loop<br/>computes id_ref"]
+    E --> F["Power factor target<br/>computes iq_ref"]
+    F --> G["dq current loop<br/>with decoupling"]
+    G --> H["Inverse transform<br/>to alpha beta"]
+    H --> I["Generate three<br/>duty commands"]
+    I --> J["Rectify power<br/>to DC bus"]

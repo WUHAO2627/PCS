@@ -1,0 +1,77 @@
+flowchart TB
+  %% Layer 1: Grid and interface
+  subgraph L1["L1 - Grid Interface"]
+    Grid["Utility Grid"] --> PCC["PCC Breaker / Grid Switch"] --> LCL["LCL Filter"]
+  end
+
+  %% Layer 2: Main conversion chain
+  subgraph L2["L2 - Power Conversion Core"]
+    AFE["AFE Rectifier<br/>Grid-Following AC/DC"] --> DCBUS["Split DC Bus<br/>Vdc, C1, C2"] --> INV["DC/AC Inverter<br/>Grid-Forming"] --> LOAD["Islanded Load / Microgrid Bus"]
+  end
+
+  %% Layer 3: Storage branch
+  subgraph L3["L3 - Energy Storage Branch"]
+    DCBUS --> DCDC["Bidirectional DC/DC<br/>Charge / Discharge"] --> BATT["Battery Pack"]
+  end
+
+  LCL --> AFE
+
+  %% Layer 4: Control stack (grouped by function)
+  subgraph CTRL["L4 - Unified PCS Controller"]
+    direction LR
+
+    subgraph C1["Sync & Grid Awareness"]
+      PLL["PLL / Synchronization"]:::ctrl
+      ISD["Islanding Detection<br/>OV/UV, OF/UF, Phase Jump, AFD"]:::ctrl
+    end
+
+    subgraph C2["Rectifier-Side Control"]
+      GFL["Grid-Following Current Control<br/>Vdc Loop + dq PI + PWM"]:::ctrl
+      NPC["NPC Midpoint Balance<br/>Zero-Sequence / Redundant Vectors"]:::ctrl
+    end
+
+    subgraph C3["Storage Management"]
+      CCCV["CCCV Charge Manager<br/>Precharge, CC, CV, Protection"]:::ctrl
+    end
+
+    subgraph C4["Inverter-Side Control"]
+      GFM["Grid-Forming Control<br/>Droop / VSG / V-f"]:::ctrl
+      CIRC["Circulating Current / Zero-Sequence Suppression"]:::ctrl
+      PAR["Multi-Inverter Parallel Control<br/>Sync + Load Sharing"]:::ctrl
+    end
+  end
+
+  %% Control-to-plant links
+  Grid --> PLL
+  Grid --> ISD
+  ISD --> PCC
+
+  PLL --> GFL
+  DCBUS --> GFL
+  GFL --> AFE
+  DCBUS --> NPC
+  NPC --> AFE
+
+  BATT --> CCCV
+  CCCV --> DCDC
+
+  DCBUS --> GFM
+  PAR --> GFM
+  GFM --> INV
+  CIRC --> INV
+
+  %% Layer 5: Planned extensions
+  subgraph TODO["L5 - Planned Additions"]
+    direction LR
+    PRE["Precharge / Contactor State Machine"]:::todo
+    PROT["Fault Management<br/>OV, UV, OC, SC, OTP, insulation"]:::todo
+    EMS["EMS / Power Dispatch / SOC Scheduling"]:::todo
+    SEQ["Start-up / Shutdown Sequencing"]:::todo
+    THERM["Thermal Model and Derating"]:::todo
+    LOG["Data Logging and Event Recorder"]:::todo
+  end
+
+  CTRL -.extend.-> TODO
+
+  classDef ctrl fill:#eaf4ff,stroke:#2f5d8a,stroke-width:1px;
+  classDef todo fill:#fff4df,stroke:#9a6b00,stroke-width:1px;

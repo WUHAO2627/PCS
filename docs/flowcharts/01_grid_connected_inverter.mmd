@@ -1,0 +1,10 @@
+flowchart TD
+    A["Measure ia ib ic<br/>and grid voltages"] --> B["Clarke<br/>transform"]
+    B --> C["SRF PLL<br/>estimate theta"]
+    C --> D["Park transform<br/>currents and voltages"]
+    D --> E["Vdc outer loop<br/>generates id_ref"]
+    E --> F["iq_ref set by<br/>reactive power target"]
+    F --> G["dq current PI<br/>with decoupling<br/>and grid feedforward"]
+    G --> H["Inverse Park<br/>transform"]
+    H --> I["SVPWM duty<br/>generation"]
+    I --> J["Drive grid-connected<br/>inverter"]

@@ -1,0 +1,9 @@
+flowchart TD
+    A["Measure output<br/>voltage and<br/>current"] --> B["Calculate<br/>P and Q"]
+    B --> C["Low-pass<br/>filter power"]
+    C --> D["Primary droop<br/>P-f and Q-V"]
+    D --> E["Optional adaptive<br/>droop update"]
+    E --> F["Secondary voltage<br/>and frequency<br/>restoration"]
+    F --> G["Compute virtual<br/>impedance drop"]
+    G --> H["Generate voltage<br/>reference and<br/>omega_ref"]
+    H --> I["Feed grid-forming<br/>voltage controller"]

@@ -1,0 +1,10 @@
+flowchart TD
+    A["Start black start<br/>command"] --> B["Initialize state<br/>and timers"]
+    B --> C["Generate free-running<br/>angle at nominal<br/>frequency"]
+    C --> D["Soft-start<br/>voltage ramp"]
+    D --> E["Measure capacitor<br/>voltage and filter<br/>current"]
+    E --> F["Clarke and Park<br/>transforms"]
+    F --> G["Voltage outer loop<br/>gives id_ref iq_ref"]
+    G --> H["Current inner loop<br/>gives ud_ref uq_ref"]
+    H --> I["Inverse Park and<br/>linear modulation"]
+    I --> J["Build island voltage<br/>from zero"]
